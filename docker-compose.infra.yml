@@ -1,0 +1,17 @@
+version: "3.8"
+
+services:
+  sql-server:
+    image: "mcr.microsoft.com/mssql/server"
+    networks:
+      - pet-game-network
+    container_name: sql-server
+    environment:
+      SA_PASSWORD: "Your_password123"
+      ACCEPT_EULA: "Y"
+    ports:
+      - "1433:1433"
+    
+networks:
+  pet-game-network:
+    name: pet-game-network

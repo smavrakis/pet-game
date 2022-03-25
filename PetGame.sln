@@ -1,0 +1,58 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32210.238
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{2A73DE4A-C474-44B1-8439-02CE9450D0CE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{A5688786-DB36-4C43-BA4F-D60BF9F0E2B3}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PetGame", "src\PetGame\PetGame.csproj", "{A5E5E9AC-3C81-4314-9F88-68E3D149A9DE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{E44F70FE-DF90-4EEC-9F57-3616EDC58008}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+		docker-compose.infra.yml = docker-compose.infra.yml
+		docker-compose.yml = docker-compose.yml
+		Dockerfile = Dockerfile
+		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libs", "Libs", "{9C9E9324-94D7-4B6A-861E-EEFA7F42CC3E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PetGame.Common", "src\PetGame.Common\PetGame.Common.csproj", "{8D8ADF8B-F367-4D1E-98E1-6B5F0EBC27DB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetGame.Persistence", "src\PetGame.Persistence\PetGame.Persistence.csproj", "{BA69A86C-354B-495E-BD25-28D5773B6F7E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A5E5E9AC-3C81-4314-9F88-68E3D149A9DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A5E5E9AC-3C81-4314-9F88-68E3D149A9DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A5E5E9AC-3C81-4314-9F88-68E3D149A9DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A5E5E9AC-3C81-4314-9F88-68E3D149A9DE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8D8ADF8B-F367-4D1E-98E1-6B5F0EBC27DB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8D8ADF8B-F367-4D1E-98E1-6B5F0EBC27DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8D8ADF8B-F367-4D1E-98E1-6B5F0EBC27DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8D8ADF8B-F367-4D1E-98E1-6B5F0EBC27DB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BA69A86C-354B-495E-BD25-28D5773B6F7E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BA69A86C-354B-495E-BD25-28D5773B6F7E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BA69A86C-354B-495E-BD25-28D5773B6F7E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BA69A86C-354B-495E-BD25-28D5773B6F7E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{A5E5E9AC-3C81-4314-9F88-68E3D149A9DE} = {2A73DE4A-C474-44B1-8439-02CE9450D0CE}
+		{9C9E9324-94D7-4B6A-861E-EEFA7F42CC3E} = {2A73DE4A-C474-44B1-8439-02CE9450D0CE}
+		{8D8ADF8B-F367-4D1E-98E1-6B5F0EBC27DB} = {9C9E9324-94D7-4B6A-861E-EEFA7F42CC3E}
+		{BA69A86C-354B-495E-BD25-28D5773B6F7E} = {9C9E9324-94D7-4B6A-861E-EEFA7F42CC3E}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E35FA8D7-B447-47CF-A596-B613661D34E9}
+	EndGlobalSection
+EndGlobal

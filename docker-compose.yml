@@ -1,0 +1,29 @@
+version: "3.8"
+
+services:
+  pet-game:
+    depends_on:
+      - sql-server
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    networks:
+      - pet-game-network
+    container_name: pet-game
+    environment:
+      Persistence__ConnectionString: "Server=sql-server;Database=master;User=sa;Password=Your_password123;"
+    ports:
+      - "5888:5000"
+
+  sql-server:
+    image: "mcr.microsoft.com/mssql/server"
+    networks:
+      - pet-game-network
+    container_name: sql-server
+    environment:
+      SA_PASSWORD: "Your_password123"
+      ACCEPT_EULA: "Y"
+    
+networks:
+  pet-game-network:
+    name: pet-game-network
