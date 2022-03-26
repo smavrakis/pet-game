@@ -1,4 +1,6 @@
-﻿using PetGame.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using PetGame.Exceptions;
+using PetGame.Models;
 using PetGame.Persistence;
 using PetGame.Persistence.Models;
 using SerilogTimings.Extensions;
@@ -10,39 +12,59 @@ namespace PetGame.Services
     {
         private readonly ILogger _logger;
         private readonly GameContext _databaseContext;
+        private readonly IPetSatisfactionService _petSatisfactionService;
 
-        public PlayerService(ILogger logger, GameContext databaseContext)
+        public PlayerService(ILogger logger, GameContext databaseContext, IPetSatisfactionService petSatisfactionService)
         {
             _logger = logger.ForContext<PlayerService>();
             _databaseContext = databaseContext;
+            _petSatisfactionService = petSatisfactionService;
         }
 
-        public async Task<PostPlayerResponse> CreatePlayerAsync(PostPlayerRequest playerRequest, CancellationToken cancellationToken = default)
+        public async Task<PostResponse> CreatePlayerAsync(PostPlayerRequest request, CancellationToken cancellationToken = default)
         {
-            if (playerRequest == null)
+            if (request == null)
             {
-                throw new ArgumentNullException(nameof(playerRequest));
+                throw new ArgumentNullException(nameof(request));
             }
 
-            _logger.Information("Creating new player");
-
-            var player = new Player
+            using (_logger.TimeOperation("Creating new player"))
             {
-                FirstName = playerRequest.FirstName,
-                MiddleName = playerRequest.MiddleName,
-                LastName = playerRequest.LastName,
-                UserName = playerRequest.UserName,
-                Email = playerRequest.Email,
-                RegistrationDate = DateTimeOffset.UtcNow
-            };
+                var player = new Player
+                {
+                    FirstName = request.FirstName,
+                    MiddleName = request.MiddleName,
+                    LastName = request.LastName,
+                    UserName = request.UserName,
+                    Email = request.Email,
+                    RegistrationDate = DateTimeOffset.UtcNow
+                };
 
-            using (_logger.TimeOperation("Saving new player to database"))
-            {
                 _databaseContext.Players.Add(player);
                 await _databaseContext.SaveChangesAsync(cancellationToken);
-            }
 
-            return new PostPlayerResponse { ID = player.ID };
+                return new PostResponse { ID = player.ID };
+            }
+        }
+
+        public async Task<Player> GetPlayerAsync(int id, CancellationToken cancellationToken = default)
+        {
+            using (_logger.TimeOperation("Getting player"))
+            {
+                var player = await _databaseContext.Players.Include(p => p.Pets).FirstOrDefaultAsync(p => p.ID == id, cancellationToken);
+
+                if (player == null)
+                {
+                    throw new ResourceNotFoundException("Player ID not found");
+                }
+
+                foreach (var pet in player.Pets)
+                {
+                    _petSatisfactionService.UpdatePetSatisfactionStats(pet);
+                }
+
+                return player;
+            }
         }
     }
 }

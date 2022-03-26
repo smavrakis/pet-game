@@ -4,6 +4,6 @@
     {
         Dog,
         Cat,
-        Fish
+        Parrot
     }
 }

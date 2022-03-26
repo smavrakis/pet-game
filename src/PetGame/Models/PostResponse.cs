@@ -1,6 +1,6 @@
 ﻿namespace PetGame.Models
 {
-    public class PostPlayerResponse
+    public class PostResponse
     {
         public int ID { get; set; }
     }

@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.Mvc;
-using PetGame.Common.Constants;
 using PetGame.Models;
 using PetGame.Services;
 
@@ -16,16 +15,24 @@ namespace PetGame.Controllers
             _playerService = playerService;
         }
 
-        [HttpPost(Name = RouteNames.CreatePlayer)]
-        public async Task<IActionResult> PostAsync(PostPlayerRequest player)
+        [HttpPost]
+        public async Task<IActionResult> PostAsync(PostPlayerRequest request, CancellationToken cancellationToken = default)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var response = await _playerService.CreatePlayerAsync(player);
-            return CreatedAtRoute(RouteNames.CreatePlayer, response);
+            var response = await _playerService.CreatePlayerAsync(request, cancellationToken);
+            return CreatedAtAction(nameof(GetAsync), new { id = response.ID }, response);
+        }
+
+        [HttpGet]
+        [Route("{id}")]
+        public async Task<IActionResult> GetAsync(int id, CancellationToken cancellationToken = default)
+        {
+            var response = await _playerService.GetPlayerAsync(id, cancellationToken);
+            return Ok(response);
         }
     }
 }

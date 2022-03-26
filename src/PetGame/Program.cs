@@ -1,8 +1,10 @@
 using PetGame.Configuration;
+using PetGame.Middleware;
 using PetGame.Persistence;
 using PetGame.Persistence.Configuration;
 using Serilog;
 using Serilog.Events;
+using System.Text.Json.Serialization;
 
 Log.Logger = new LoggerConfiguration()
             .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
@@ -37,8 +39,16 @@ catch (Exception ex)
 static void ConfigureServices(IServiceCollection services, IConfiguration configuration)
 {
     services.AddSingleton(Log.Logger);
-    services.AddControllers();
-    services.AddApiServices();
+    services.AddControllers(options =>
+    {
+        options.SuppressAsyncSuffixInActionNames = false;
+    })
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;        
+        options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+    });
+    services.AddApiServices(configuration);
     services.AddPersistenceServices(configuration);
 }
 
@@ -53,5 +63,6 @@ static void ConfigureApp(WebApplication app)
     }
 
     app.UseSerilogRequestLogging();
+    app.UseMiddleware<ExceptionHandlingMiddleware>();
     app.MapControllers();
 }
