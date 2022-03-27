@@ -27,7 +27,8 @@ http://localhost:5888
 Path: `/player`
 
 #### Create new player
-Verb: Post
+- Verb: Post
+
 Example request:
 ```json
 {
@@ -38,6 +39,7 @@ Example request:
     "Email": "test@test.com"
 }
 ```
+
 Example response:
 ```json
 {
@@ -46,8 +48,9 @@ Example response:
 ```
 
 #### Get player info
-Path:`/{id}`
-Verb: Get
+- Path:`/{id}`
+- Verb: Get
+
 Example response:
 ```
 {
@@ -77,7 +80,8 @@ Example response:
 Path: `/pet`
 
 #### Adopt new pet
-Verb: Post
+- Verb: Post
+
 Example request:
 ```json
 {
@@ -86,6 +90,7 @@ Example request:
     "Type": "Cat"
 }
 ```
+
 Example response:
 ```json
 {
@@ -94,8 +99,9 @@ Example response:
 ```
 
 #### Get pet info
-Path:`/{id}`
-Verb: Get
+- Path:`/{id}`
+- Verb: Get
+
 Example response:
 ```
 {
@@ -111,8 +117,9 @@ Example response:
 ```
 
 #### Update pet
-Path:`/{id}`
-Verb: Put
+- Path:`/{id}`
+- Verb: Put
+
 Example request:
 ```json
 {
@@ -123,7 +130,9 @@ Example request:
 
 ## Game behaviour
 Each pet's hunger and happiness change at different rates (arbitratily chosen), but these can be configured in the `src\PetGame\appsettings.json` file. Each rate is a timespan value indicating how much time has to pass before
-there's a change of 1 point in the stat's value. For example, the dog's default rates of `00:20:00` means that its hunger will decrease by 1 point every 20 minutes and its happiness will decrease by 1 point every 20 minutes.
+there's a change of 1 point in the stat's value. 
+
+For example, the dog's default rates of `00:20:00` means that its hunger will decrease by 1 point every 20 minutes and its happiness will decrease by 1 point every 20 minutes.
 The stats have a neutral value of 50 points, a minimum value of 0 points and a maximum value of 100 points. If you want to experiment with the stats changing and don't have time to wait for the default rates, feel free to change
 them to faster rates, e.g. `00:00:05` (1 stat change every 5 seconds). Don't forget to relaunch the app following the steps outlined above in order for the changes to take effect.
 
@@ -136,3 +145,4 @@ I did not have time to fully finish the game, so here are a few things that I wo
 - More integration tests
 - Validation
 - Unique index on username/email etc
+- Add more pets
