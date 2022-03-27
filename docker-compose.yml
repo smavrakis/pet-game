@@ -13,7 +13,7 @@ services:
     environment:
       Persistence__ConnectionString: "Server=sql-server;Database=master;User=sa;Password=Your_password123;"
     ports:
-      - "5888:5000"
+      - "5888:80"
 
   sql-server:
     image: "mcr.microsoft.com/mssql/server"
