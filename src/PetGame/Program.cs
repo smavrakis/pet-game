@@ -4,6 +4,7 @@ using PetGame.Persistence;
 using PetGame.Persistence.Configuration;
 using Serilog;
 using Serilog.Events;
+using System.Text.Json;
 using System.Text.Json.Serialization;
 
 Log.Logger = new LoggerConfiguration()
@@ -45,6 +46,7 @@ static void ConfigureServices(IServiceCollection services, IConfiguration config
     })
     .AddJsonOptions(options =>
     {
+        options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
         options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;        
         options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
     });
@@ -66,3 +68,6 @@ static void ConfigureApp(WebApplication app)
     app.UseMiddleware<ExceptionHandlingMiddleware>();
     app.MapControllers();
 }
+
+// Required for integration tests
+public partial class Program { }

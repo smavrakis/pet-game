@@ -2,6 +2,6 @@
 {
     public class PostResponse
     {
-        public int ID { get; set; }
+        public int Id { get; set; }
     }
 }

@@ -37,7 +37,7 @@ namespace PetGame.Services
                 throw new InvalidOperationException($"Missing pet satisfaction stats for pet with ID [{pet.ID}]");
             }
 
-            var now = DateTimeOffset.UtcNow;            
+            var now = DateTimeOffset.UtcNow;
             pet.Happiness -= (int)(now - pet.LastPetted.Value).Divide(_settings.Happiness[petType]);
 
             if (pet.Happiness < PetSatisfactionStats.MinValue)

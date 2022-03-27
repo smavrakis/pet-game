@@ -52,7 +52,7 @@ namespace PetGame.Services
                 player.Pets.Add(pet);
                 await _databaseContext.SaveChangesAsync(cancellationToken);
 
-                return new PostResponse { ID = pet.ID };
+                return new PostResponse { Id = pet.ID };
             }
         }
 

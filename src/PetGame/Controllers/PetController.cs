@@ -24,7 +24,7 @@ namespace PetGame.Controllers
             }
 
             var response = await _petService.AdoptPetAsync(request, cancellationToken);
-            return CreatedAtAction(nameof(GetAsync), new { id = response.ID }, response);
+            return CreatedAtAction(nameof(GetAsync), new { id = response.Id }, response);
         }
 
         [HttpGet]
