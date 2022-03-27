@@ -8,6 +8,7 @@ namespace PetGame.Models
         [Required]
         public int PlayerId { get; set; }
         [Required]
+        [StringLength(Validation.StringMaxLength)]
         public string? Name { get; set; }
         [Required]
         public PetType Type { get; set; }

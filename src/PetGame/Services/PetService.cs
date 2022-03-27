@@ -72,5 +72,57 @@ namespace PetGame.Services
                 return pet;
             }
         }
+
+        public async Task UpdatePetAsync(int id, PutPetRequest request, CancellationToken cancellationToken = default)
+        {
+            if (request == null)
+            {
+                throw new ArgumentNullException(nameof(request));
+            }
+
+            using (_logger.TimeOperation("Updating pet"))
+            {
+                var pet = await _databaseContext.FindAsync<Pet>(id);
+
+                if (pet == null)
+                {
+                    throw new ResourceNotFoundException("Pet ID not found");
+                }
+
+                if (request.Name != null)
+                {
+                    pet.Name = request.Name;
+                }
+
+                if (request.FeedingPoints != null || request.PettingPoints != null)
+                {
+                    _petSatisfactionService.UpdatePetSatisfactionStats(pet);
+
+                    if (request.FeedingPoints != null)
+                    {
+                        pet.Hunger -= request.FeedingPoints.Value;
+                        pet.LastFed = DateTimeOffset.UtcNow;
+
+                        if (pet.Hunger < PetSatisfactionStats.MinValue)
+                        {
+                            pet.Hunger = PetSatisfactionStats.MinValue;
+                        }
+                    }
+
+                    if (request.PettingPoints != null)
+                    {
+                        pet.Happiness += request.PettingPoints.Value;
+                        pet.LastPetted = DateTimeOffset.UtcNow;
+
+                        if (pet.Happiness > PetSatisfactionStats.MaxValue)
+                        {
+                            pet.Happiness = PetSatisfactionStats.MaxValue;
+                        }
+                    }
+                }
+
+                await _databaseContext.SaveChangesAsync(cancellationToken);
+            }
+        }
     }
 }

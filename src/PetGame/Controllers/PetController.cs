@@ -34,5 +34,18 @@ namespace PetGame.Controllers
             var response = await _petService.GetPetAsync(id);
             return Ok(response);
         }
+
+        [HttpPut]
+        [Route("{id}")]
+        public async Task<IActionResult> PutAsync(int id, PutPetRequest request, CancellationToken cancellationToken = default)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            await _petService.UpdatePetAsync(id, request, cancellationToken);
+            return NoContent();
+        }
     }
 }

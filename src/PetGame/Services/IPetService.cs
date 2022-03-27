@@ -7,5 +7,6 @@ namespace PetGame.Services
     {
         Task<PostResponse> AdoptPetAsync(PostPetRequest request, CancellationToken cancellationToken = default);
         Task<Pet> GetPetAsync(int id);
+        Task UpdatePetAsync(int id, PutPetRequest request, CancellationToken cancellationToken = default);
     }
 }
